@@ -59,6 +59,7 @@ class UserProvider with ChangeNotifier{
 
   Future<bool> signUp()async{
     try{
+      print("register!!!!");
       _status = Status.Authenticating;
       notifyListeners();
       await _auth.createUserWithEmailAndPassword(email: email.text.trim(), password: password.text.trim()).then((result){
@@ -72,6 +73,7 @@ class UserProvider with ChangeNotifier{
       });
       return true;
     }catch(e){
+      print("fail!!!!");
       _status = Status.Unauthenticated;
       notifyListeners();
       print(e.toString());
