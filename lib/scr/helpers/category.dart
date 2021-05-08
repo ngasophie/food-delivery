@@ -7,6 +7,7 @@ class CategoryServices {
 
   Future<List<CategoryModel>> getCategories() async =>
       _firestore.collection(collection).getDocuments().then((result) {
+        print(result.documents);
         List<CategoryModel> categories = [];
         for(DocumentSnapshot category in result.documents){
             categories.add(CategoryModel.fromSnapshot(category));

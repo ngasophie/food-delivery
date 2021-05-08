@@ -15,6 +15,7 @@ class RestaurantProvider with ChangeNotifier{
 
   loadRestaurants()async{
     restaurants = await _restaurantServices.getRestaurants();
+    print(restaurants);
     notifyListeners();
   }
 

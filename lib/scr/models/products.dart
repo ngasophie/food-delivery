@@ -23,7 +23,7 @@ class ProductModel {
   String _image;
   String _description;
 
-  double _rating;
+  int _rating;
   int _price;
   int _rates;
 
@@ -45,7 +45,7 @@ class ProductModel {
 
 
 
-  double get rating => _rating;
+  int get rating => _rating;
 
   int get price => _price;
 

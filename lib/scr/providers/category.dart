@@ -11,6 +11,7 @@ class CategoryProvider with ChangeNotifier{
   }
 
   loadCategories()async{
+    print('here');
     categories = await _categoryServices.getCategories();
     notifyListeners();
   }

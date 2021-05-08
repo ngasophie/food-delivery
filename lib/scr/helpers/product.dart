@@ -7,6 +7,7 @@ class ProductServices {
 
   Future<List<ProductModel>> getProducts() async =>
       _firestore.collection(collection).getDocuments().then((result) {
+        print(result.documents);
         List<ProductModel> products = [];
         for (DocumentSnapshot product in result.documents) {
           products.add(ProductModel.fromSnapshot(product));
