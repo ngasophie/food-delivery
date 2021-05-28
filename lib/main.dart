@@ -63,7 +63,8 @@ Future<Direct> fetchDirect() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
   print(jsonDecode(response)['paths'][0]['instructions'][0]);
-    return Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][0]);
+  print(Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][0]));
+    return Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][1]);
   // } else {
   //   // If the server did not return a 200 OK response,
   //   // then throw an exception.
@@ -88,7 +89,7 @@ class Direct {
       distinct: json['distinct'],
       text: json['text'],
       time: json['time'],
-      streetName: json['streetName']
+      streetName: json['street_name']
     );
   }
 }
@@ -127,7 +128,7 @@ class _MyAppState extends State<MyApp> {
             future: futureDirect,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                // return Text(snapshot.data!.title);
+                return Text(snapshot.data.text);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
