@@ -52,8 +52,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:food_course/color.dart';
+import 'package:food_course/test.dart';
 
-Future<Direct> fetchDirect() async {
+Future<List> fetchDirect() async {
   // print(await http.read('https://apis.wemap.asia/route-api/route?point=21.052403%2C105.78362&point=20.982317%2C105.863335&type=json&locale=en-US&vehicle=car&weighting=fastest&elevation=false&key=GqfwrZUEfxbwbnQUhtBMFivEysYIxelQ'));
 
   final response =
@@ -63,8 +65,12 @@ Future<Direct> fetchDirect() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
   print(jsonDecode(response)['paths'][0]['instructions'][0]);
-  print(Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][0]));
-    return Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][1]);
+  // print(Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][0]));
+  var lst = new List();
+  for( var i = 0 ; i < jsonDecode(response)['paths'][0]['instructions']; i++ ) {
+    lst.add( Direct.fromJson(jsonDecode(response)['paths'][0]['instructions'][i]));
+  }
+  return lst;
   // } else {
   //   // If the server did not return a 200 OK response,
   //   // then throw an exception.
@@ -94,7 +100,15 @@ class Direct {
   }
 }
 
-void main() => runApp(MyApp());
+void main() => runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: primary
+      ),
+      home: IndexPage(),
+    )
+);
 
 class MyApp extends StatefulWidget {
   // MyApp({Key? key}) : super(key: key);
@@ -104,7 +118,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-   Future<Direct> futureDirect;
+   Future<List> futureDirect;
 
   @override
   void initState() {
@@ -123,21 +137,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Fetch Data Example'),
         ),
-        body: Center(
-          child: FutureBuilder<Direct>(
-            future: futureDirect,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data.text);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
 
-              // By default, show a loading spinner.
-              return CircularProgressIndicator();
-            },
-          ),
-        ),
       ),
     );
   }
